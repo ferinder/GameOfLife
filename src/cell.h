@@ -5,13 +5,13 @@
 class Cell
 {
 public:
-    Cell();
-    bool GetState();
-    void SetState(bool state);
-    void ToggleState();
+Cell();
+bool IsAlive();
+void SetState(bool alive);
+void ToggleState();
 
 private:
-    bool state;
+bool alive;
 };
 
 #endif // CELL_H

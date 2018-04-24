@@ -24,12 +24,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         src\main.cpp \
-        src\mainwindow.cpp \
-        src\cell.cpp
+        src\mainwindow.cpp\
+        src\cell.cpp\
+        src\gameboard.cpp\
+        src\game.cpp\
+        src\newboarddialog.cpp
 
 HEADERS += \
-        src\mainwindow.h \
-        src\cell.h
+        src\mainwindow.h\
+        src\cell.h\
+        src\gameboard.h\
+        src\game.h\
+        src\newboarddialog.h
 
 FORMS += \
-        src\mainwindow.ui
+        src\mainwindow.ui\
+        src\newboarddialog.ui
+
+RESOURCES += \
+        icons.qrc

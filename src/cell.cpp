@@ -2,21 +2,21 @@
 
 Cell::Cell()
 {
-    state = false;
+    alive = false;
 }
 
-bool Cell::GetState()
+bool Cell::IsAlive()
 {
-    return state;
+    return alive;
 }
 
 void Cell::SetState(bool state)
 {
-    this->state = state;
+    this->alive = state;
 }
 
 void Cell::ToggleState()
 {
-    if(state) state = false;
-    else state = true;
+    if(alive) alive = false;
+    else alive = true;
 }
