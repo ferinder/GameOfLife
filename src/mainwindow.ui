@@ -41,8 +41,10 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
+   <addaction name="actionRun"/>
+   <addaction name="actionForward"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNewBoard">
@@ -65,8 +67,29 @@
     <string>Zakończ</string>
    </property>
   </action>
+  <action name="actionRun">
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/src/icons/play.png</normaloff>
+     <normalon>../icons/ic_play_arrow_black_24dp_1x.png</normalon>:/icons/src/icons/play.png</iconset>
+   </property>
+   <property name="text">
+    <string>Run</string>
+   </property>
+  </action>
+  <action name="actionForward">
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/src/icons/forward_5.png</normaloff>:/icons/src/icons/forward_5.png</iconset>
+   </property>
+   <property name="text">
+    <string>Forward</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -25,11 +25,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 VPATH += src\
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp
+        src\main.cpp \
+        src\mainwindow.cpp\
+        src\cell.cpp\
+        src\gameboard.cpp\
+        src\game.cpp\
+        src\newboarddialog.cpp
 
 HEADERS += \
-        mainwindow.h
+        src\mainwindow.h\
+        src\cell.h\
+        src\gameboard.h\
+        src\game.h\
+        src\newboarddialog.h
 
 FORMS += \
-        mainwindow.ui
+        src\mainwindow.ui\
+        src\newboarddialog.ui
+
+RESOURCES += \
+        icons.qrc
