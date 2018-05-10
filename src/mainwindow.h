@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPainter>
 #include "game.h"
 #include "newboarddialog.h"
 
@@ -25,8 +26,11 @@ void on_actionNewBoard_triggered();
 void on_actionRun_triggered();
 
 private:
+void paintEvent(QPaintEvent *);
+
 Ui::MainWindow *ui;
 Game game;
+int cellSize = 5;
 };
 
 #endif // MAINWINDOW_H

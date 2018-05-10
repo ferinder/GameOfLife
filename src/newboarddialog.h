@@ -14,8 +14,8 @@ Q_OBJECT
 public:
 explicit NewBoardDialog(QWidget *parent = 0);
 ~NewBoardDialog();
-int GetSizeXFromDialog();
-int GetSizeYFromDialog();
+int GetSizeX();
+int GetSizeY();
 
 private:
 Ui::NewBoardDialog *ui;
