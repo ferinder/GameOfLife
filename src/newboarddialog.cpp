@@ -9,7 +9,7 @@ NewBoardDialog::NewBoardDialog(QWidget *parent) :
     ui->sizeX->setMinimum(0);
     ui->sizeX->setMaximum(200);
     ui->sizeY->setMinimum(0);
-    ui->sizeY->setMaximum(200);
+    ui->sizeY->setMaximum(150);
 }
 
 NewBoardDialog::~NewBoardDialog()
@@ -17,12 +17,12 @@ NewBoardDialog::~NewBoardDialog()
     delete ui;
 }
 
-int NewBoardDialog::GetSizeXFromDialog()
+int NewBoardDialog::GetSizeX()
 {
     return ui->sizeX->value();
 }
 
-int NewBoardDialog::GetSizeYFromDialog()
+int NewBoardDialog::GetSizeY()
 {
     return ui->sizeY->value();
 }
