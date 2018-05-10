@@ -22,6 +22,21 @@ void GameBoard::ToggleCellState(int x, int y)
     board[x][y].ToggleState();
 }
 
+int GameBoard::GetSizeX()
+{
+    return sizeX;
+}
+
+int GameBoard::GetSizeY()
+{
+    return sizeY;
+}
+
+bool GameBoard::GetCellState(int x, int y)
+{
+    return board[x][y].IsAlive();
+}
+
 GameBoard::GameBoard()
 {
 

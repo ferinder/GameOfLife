@@ -11,9 +11,11 @@ GameBoard();
 GameBoard(int sizeX, int sizeY);
 GameBoard(const GameBoard& gameBoard);
 void ToggleCellState(int x, int y);
+int GetSizeX();
+int GetSizeY();
+bool GetCellState(int x, int y);
 
 private:
-Cell &GetCell(int x, int y);
 
 int sizeX;
 int sizeY;
