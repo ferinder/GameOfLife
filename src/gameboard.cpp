@@ -5,8 +5,8 @@ GameBoard::GameBoard(int sizeX, int sizeY)
 {
     this->sizeX = sizeX;
     this->sizeY = sizeY;
-    board = std::vector<std::vector<Cell> >(sizeX,std::vector<Cell>(sizeY,Cell()));
-    std::cout << this->sizeX << ' ' << this->sizeY;
+    board = std::vector<Cell>((sizeX * sizeY), Cell());
+    std::cout << "Board constructor: " << this->sizeX << 'x' << this->sizeY << std::endl;
 }
 
 GameBoard::GameBoard(const GameBoard &gameBoard)
@@ -14,30 +14,20 @@ GameBoard::GameBoard(const GameBoard &gameBoard)
     this->sizeX = gameBoard.sizeX;
     this->sizeY = gameBoard.sizeY;
     this->board = gameBoard.board;
-    std::cout << "copy const" << this->sizeX << ' ' << this->sizeY;
-}
-
-void GameBoard::ToggleCellState(int x, int y)
-{
-    board[x][y].ToggleState();
+    std::cout << "copy const" << this->sizeX << 'x' << this->sizeY << std::endl;
 }
 
 int GameBoard::GetSizeX()
 {
-    return sizeX;
+    return this->sizeX;
 }
 
 int GameBoard::GetSizeY()
 {
-    return sizeY;
+    return this->sizeY;
 }
 
-bool GameBoard::GetCellState(int x, int y)
+Cell &GameBoard::operator()(int x, int y)
 {
-    return board[x][y].IsAlive();
-}
-
-GameBoard::GameBoard()
-{
-
+    return board[(y * this->sizeX) + x];
 }

@@ -13,18 +13,19 @@ void RunSimulation(int steps = 0);
 void LoadBoard(std::string filePath);
 void SaveBoard(std::string filepath);
 void NewBoard(int sizeX, int sizeY);
-void ToggleContinouse();
-bool IsContinouse();
+bool IsSet();
 int GetBoardSizeX();
 int GetBoardSizeY();
-bool IsCellAlive(int x, int y);
 void ToggleCellState(int x, int y);
-bool IsSet();
+void ToggleContinouse();
+bool IsContinouse();
+bool IsCellAlive(int x, int y);
 
 private:
 GameBoard board;
-bool gameIsSet;
-bool continouse;
+bool isSet;
+bool isContinouse;
+int calculateNeighbours(int x, int y);
 };
 
 #endif // GAME_H

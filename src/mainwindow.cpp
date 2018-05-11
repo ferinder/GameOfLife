@@ -28,17 +28,23 @@ void MainWindow::on_actionNewBoard_triggered()
         ui->actionSaveBoard->setEnabled(true);
         this->resize(game.GetBoardSizeX() * (cellSize + 1) + 10,
                      game.GetBoardSizeY() * (cellSize + 1) + 65);
+        repaint();
         game.ToggleCellState(2, 2);
+        repaint();
+        game.ToggleCellState(2, 3);
+        repaint();
+        game.ToggleCellState(2, 4);
         repaint();
     }
 }
 
 void MainWindow::on_actionRun_triggered()
 {
-    game.ToggleContinouse();
-    if(game.IsContinouse()) ui->actionRun->setIcon(QIcon(":/icons/src/icons/stop.png"));
-    else ui->actionRun->setIcon(QIcon(":/icons/src/icons/play.png"));
-
+    game.RunSimulation(1);
+//    game.ToggleContinouse();
+//    if(game.IsContinouse()) ui->actionRun->setIcon(QIcon(":/icons/src/icons/stop.png"));
+//    else ui->actionRun->setIcon(QIcon(":/icons/src/icons/play.png"));
+    repaint();
 }
 
 void MainWindow::paintEvent(QPaintEvent *)
