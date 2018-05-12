@@ -7,11 +7,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->actionSaveBoard->setDisabled(true);
+    timer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()), this, SLOT(runSimulation()));
+    timer->setInterval(1000);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete timer;
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -24,15 +28,12 @@ void MainWindow::on_actionNewBoard_triggered()
     NewBoardDialog dlg(this);
     if(dlg.exec() == QDialog::Accepted)
     {
-        game.NewBoard(dlg.GetSizeX(), dlg.GetSizeY());
+        game.NewBoard(dlg.GetSizeX(),dlg.GetSizeY());
         ui->actionSaveBoard->setEnabled(true);
         this->resize(game.GetBoardSizeX() * (cellSize + 1) + 10,
                      game.GetBoardSizeY() * (cellSize + 1) + 65);
-        repaint();
         game.ToggleCellState(2, 2);
-        repaint();
         game.ToggleCellState(2, 3);
-        repaint();
         game.ToggleCellState(2, 4);
         repaint();
     }
@@ -40,10 +41,20 @@ void MainWindow::on_actionNewBoard_triggered()
 
 void MainWindow::on_actionRun_triggered()
 {
+    if(!game.IsContinouse()) {
+        ui->actionRun->setIcon(QIcon(":/icons/src/icons/stop.png"));
+        timer->start();
+    }
+    else{
+        ui->actionRun->setIcon(QIcon(":/icons/src/icons/play.png"));
+        timer->stop();
+    }
+    game.ToggleContinouse();
+}
+
+void MainWindow::runSimulation()
+{
     game.RunSimulation(1);
-//    game.ToggleContinouse();
-//    if(game.IsContinouse()) ui->actionRun->setIcon(QIcon(":/icons/src/icons/stop.png"));
-//    else ui->actionRun->setIcon(QIcon(":/icons/src/icons/play.png"));
     repaint();
 }
 

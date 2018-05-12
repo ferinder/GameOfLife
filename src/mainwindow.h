@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPainter>
+#include <QTimer>
 #include "game.h"
 #include "newboarddialog.h"
 
@@ -24,11 +25,14 @@ void on_actionExit_triggered();
 void on_actionNewBoard_triggered();
 
 void on_actionRun_triggered();
+void runSimulation();
 
 private:
 void paintEvent(QPaintEvent *);
 
 Ui::MainWindow *ui;
+QTimer *timer = nullptr;
+
 Game game;
 int cellSize = 5;
 };

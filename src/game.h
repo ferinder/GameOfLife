@@ -9,7 +9,7 @@ class Game
 {
 public:
 Game();
-void RunSimulation(int steps = 0);
+void RunSimulation(int steps = 1);
 void LoadBoard(std::string filePath);
 void SaveBoard(std::string filepath);
 void NewBoard(int sizeX, int sizeY);
