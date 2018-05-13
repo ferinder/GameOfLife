@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include <QIODevice>
+
 Game::Game()
 {
     isSet = false;
@@ -36,6 +38,76 @@ void Game::RunSimulation(int steps)
             }
         }
         this->board = newBoard;
+    }
+}
+
+bool Game::LoadBoard(std::string filePath)
+{
+    std::ifstream file(filePath);
+    if(file.is_open())
+    {
+        std::string line;
+        std::getline(file, line);
+        int sizeX = std::stoi(line);
+
+        std::getline(file, line);
+        int sizeY = std::stoi(line);
+
+        std::vector<Cell> cells;
+        cells.reserve(sizeX * sizeY);
+
+        std::getline(file, line);
+        for(auto ch : line)
+        {
+            if(ch == '0')
+            {
+                cells.push_back(Cell(false));
+            }
+            else if(ch == '1')
+            {
+                cells.push_back(Cell(true));
+            }
+            else
+            {
+                qDebug() << "Error with getting cell state!";
+            }
+        }
+        file.close();
+        this->board = GameBoard(sizeX, sizeY, cells);
+        isSet = true;
+        return true;
+    }
+    else
+    {
+        qDebug() << "Error with reading file!";
+        return false;
+    }
+
+}
+
+void Game::SaveBoard(std::string filepath)
+{
+    std::ofstream file;
+    file.open(filepath);
+    if(file.is_open())
+    {
+        file << this->GetBoardSizeX() << '\n';
+        file << this->GetBoardSizeY() << '\n';
+
+        for(int idx = 0;
+            idx < this->board.GetSizeX() * this->GetBoardSizeY();
+            idx++)
+        {
+            if(this->board(idx).IsAlive())
+            {
+                file.put('1');
+            }
+            else
+            {
+                file.put('0');
+            }
+        }
+        file.close();
     }
 }
 

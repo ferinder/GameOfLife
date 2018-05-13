@@ -2,7 +2,12 @@
 
 Cell::Cell()
 {
-    alive = false;
+    this->alive = false;
+}
+
+Cell::Cell(bool alive)
+{
+    this->alive = alive;
 }
 
 bool Cell::IsAlive()

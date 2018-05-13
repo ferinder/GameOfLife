@@ -105,3 +105,21 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
              << "\nCell: " << cellX << ' ' << cellY;
 
 }
+
+
+void MainWindow::on_actionLoadBoard_triggered()
+{
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open board"));
+    if(!this->game.LoadBoard(filePath.toStdString())) return;
+    this->resize(game.GetBoardSizeX() * (cellSize + 1) + 10,
+                 game.GetBoardSizeY() * (cellSize + 1) +
+                 ui->centralWidget->geometry().y() + 10);
+    repaint();
+    ui->actionSaveBoard->setEnabled(true);
+}
+
+void MainWindow::on_actionSaveBoard_triggered()
+{
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Save board"));
+    this->game.SaveBoard(filePath.toStdString());
+}

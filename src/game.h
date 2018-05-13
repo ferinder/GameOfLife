@@ -1,16 +1,20 @@
 #ifndef GAME_H
 #define GAME_H
-#include <memory>
 #include "gameboard.h"
+#include "cell.h"
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <vector>
+#include <QDebug>
+
 
 class Game
 {
 public:
 Game();
 void RunSimulation(int steps = 1);
-void LoadBoard(std::string filePath);
+bool LoadBoard(std::string filePath);
 void SaveBoard(std::string filepath);
 void NewBoard(int sizeX, int sizeY);
 bool IsSet();

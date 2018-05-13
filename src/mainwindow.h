@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QMouseEvent>
 #include <QDebug>
+#include <QFileDialog>
 #include "game.h"
 #include "newboarddialog.h"
 
@@ -23,21 +24,21 @@ explicit MainWindow(QWidget *parent = 0);
 
 private slots:
 void on_actionExit_triggered();
-
 void on_actionNewBoard_triggered();
-
 void on_actionRun_triggered();
 void runSimulation();
+void on_actionLoadBoard_triggered();
+
+void on_actionSaveBoard_triggered();
 
 private:
-void paintEvent(QPaintEvent *) override;
-void mouseReleaseEvent(QMouseEvent *ev) override;
+void paintEvent(QPaintEvent *);
+void mouseReleaseEvent(QMouseEvent *ev);
 
 Ui::MainWindow *ui;
 QTimer *timer = nullptr;
 
 Game game;
-
 static const int cellSize = 5;
 };
 

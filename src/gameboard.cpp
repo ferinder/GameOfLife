@@ -17,6 +17,13 @@ GameBoard::GameBoard(const GameBoard &gameBoard)
     qDebug() << "copy const" << this->sizeX << 'x' << this->sizeY;//<< std::endl;
 }
 
+GameBoard::GameBoard(int sizeX, int sizeY, std::vector<Cell> cells)
+{
+    this->sizeX = sizeX;
+    this->sizeY = sizeY;
+    this->board = cells;
+}
+
 int GameBoard::GetSizeX()
 {
     return this->sizeX;
@@ -30,4 +37,9 @@ int GameBoard::GetSizeY()
 Cell &GameBoard::operator()(int x, int y)
 {
     return board[(y * this->sizeX) + x];
+}
+
+Cell &GameBoard::operator()(int idx)
+{
+    return board[idx];
 }

@@ -11,9 +11,11 @@ public:
 GameBoard() = default;
 GameBoard(int sizeX, int sizeY);
 GameBoard(const GameBoard& gameBoard);
+GameBoard(int sizeX, int sizeY, std::vector<Cell> cells);
 int GetSizeX();
 int GetSizeY();
 Cell &operator()(int x, int y);
+Cell &operator()(int idx);
 
 private:
 int sizeX;

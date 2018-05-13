@@ -6,6 +6,7 @@ class Cell
 {
 public:
 Cell();
+Cell(bool alive);
 bool IsAlive();
 void SetState(bool alive);
 void ToggleState();
