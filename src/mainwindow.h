@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QPainter>
 #include <QTimer>
+#include <QMouseEvent>
+#include <QDebug>
 #include "game.h"
 #include "newboarddialog.h"
 
@@ -28,13 +30,15 @@ void on_actionRun_triggered();
 void runSimulation();
 
 private:
-void paintEvent(QPaintEvent *);
+void paintEvent(QPaintEvent *) override;
+void mouseReleaseEvent(QMouseEvent *ev) override;
 
 Ui::MainWindow *ui;
 QTimer *timer = nullptr;
 
 Game game;
-int cellSize = 5;
+
+static const int cellSize = 5;
 };
 
 #endif // MAINWINDOW_H

@@ -2,6 +2,7 @@
 #define BOARD_H
 #include <iostream>
 #include <vector>
+#include <QDebug>
 #include "cell.h"
 
 class GameBoard

@@ -31,7 +31,8 @@ void MainWindow::on_actionNewBoard_triggered()
         game.NewBoard(dlg.GetSizeX(),dlg.GetSizeY());
         ui->actionSaveBoard->setEnabled(true);
         this->resize(game.GetBoardSizeX() * (cellSize + 1) + 10,
-                     game.GetBoardSizeY() * (cellSize + 1) + 65);
+                     game.GetBoardSizeY() * (cellSize + 1) +
+                     ui->centralWidget->geometry().y() + 10);
         game.ToggleCellState(2, 2);
         game.ToggleCellState(2, 3);
         game.ToggleCellState(2, 4);
@@ -62,11 +63,12 @@ void MainWindow::paintEvent(QPaintEvent *)
 {
     if(!game.IsSet()) return;
     QPainter myPainter(this);
-    int windowCoordinateY = 60;
-    int windowCoordinateX = 5;
+    int windowCoordinateY = 0;
+    int widgetCoordinateStartY = ui->centralWidget->geometry().y() + 5;
+    int windowCoordinateX = ui->centralWidget->geometry().x() + 5;
     for(int x = 0; x < game.GetBoardSizeX(); x++)
     {
-        windowCoordinateY = 60;
+        windowCoordinateY = widgetCoordinateStartY;
         for( int y = 0; y < game.GetBoardSizeY(); y++)
         {
             if(game.IsCellAlive(x, y))
@@ -83,4 +85,23 @@ void MainWindow::paintEvent(QPaintEvent *)
         }
         windowCoordinateX += cellSize + 1;
     }
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
+{
+    int posX = ev->x() - ui->centralWidget->geometry().x() - 5;
+    int posY = ev->y() - ui->centralWidget->geometry().y() - 5;
+    int cellX = posX/(cellSize + 1);
+    int cellY = posY/(cellSize + 1);
+    if(posX%(cellSize + 1) != 5 && posY%(cellSize + 1) != 5)
+    {
+        if(game.IsSet())
+        {
+            game.ToggleCellState(cellX, cellY);
+            repaint();
+        }
+    }
+    qDebug() << "Mouse position: X Y: " << posX << ' ' << posY
+             << "\nCell: " << cellX << ' ' << cellY;
+
 }

@@ -6,7 +6,7 @@ GameBoard::GameBoard(int sizeX, int sizeY)
     this->sizeX = sizeX;
     this->sizeY = sizeY;
     board = std::vector<Cell>((sizeX * sizeY), Cell());
-    std::cout << "Board constructor: " << this->sizeX << 'x' << this->sizeY << std::endl;
+    qDebug() << "Board constructor: " << this->sizeX << 'x' << this->sizeY;//<< std::endl;
 }
 
 GameBoard::GameBoard(const GameBoard &gameBoard)
@@ -14,7 +14,7 @@ GameBoard::GameBoard(const GameBoard &gameBoard)
     this->sizeX = gameBoard.sizeX;
     this->sizeY = gameBoard.sizeY;
     this->board = gameBoard.board;
-    std::cout << "copy const" << this->sizeX << 'x' << this->sizeY << std::endl;
+    qDebug() << "copy const" << this->sizeX << 'x' << this->sizeY;//<< std::endl;
 }
 
 int GameBoard::GetSizeX()
