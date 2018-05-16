@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Gra w życie</string>
   </property>
   <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
@@ -32,6 +32,8 @@
     <addaction name="actionLoadBoard"/>
     <addaction name="actionSaveBoard"/>
     <addaction name="separator"/>
+    <addaction name="actionUstawienia"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuRules">
@@ -48,7 +50,6 @@
     </property>
     <addaction name="actionWybierz_regu"/>
     <addaction name="separator"/>
-    <addaction name="actionUstawienia"/>
    </widget>
    <addaction name="menuPlik"/>
    <addaction name="menuEdycja"/>
