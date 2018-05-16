@@ -123,3 +123,12 @@ void MainWindow::on_actionSaveBoard_triggered()
     QString filePath = QFileDialog::getSaveFileName(this, tr("Save board"));
     this->game.SaveBoard(filePath.toStdString());
 }
+
+void MainWindow::on_actionChoose_rule_triggered()
+{
+    GetRuleDialog dlg(this);
+    if(dlg.exec() == QDialog::Accepted)
+    {
+        this->game.SetRule(dlg.GetRuleFromDialog());
+    }
+}

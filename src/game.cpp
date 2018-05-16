@@ -6,13 +6,13 @@
 Game::Game()
 {
     isSet = false;
-    rule = "12345/3";
+    rule = "23/3";
 }
 
 void Game::RunSimulation(int steps)
 {
-    QTime timer;
-    timer.start();
+//    QTime timer;
+//    timer.start();
     int splitIndex = this->rule.find('/');
     std::string live = this->rule.substr(0,splitIndex);
     std::string die = this->rule.substr(splitIndex+1);
@@ -21,7 +21,7 @@ void Game::RunSimulation(int steps)
         GameBoard newBoard(this->board);
         int boardSizeX = this->board.GetSizeX();
         int boardSizeY = this->board.GetSizeY();
-//        qDebug() << "Rule: " << rule.c_str() << "live: " << live.c_str() << "Die: " << die.c_str();
+        qDebug() << "Rule: " << rule.c_str() << "live: " << live.c_str() << "Die: " << die.c_str();
         for (int x = 0; x < boardSizeX; x++)
         {
             for(int y = 0; y < boardSizeY; y++)
@@ -65,7 +65,7 @@ void Game::RunSimulation(int steps)
         }
         this->board = newBoard;
     }
-    qDebug() << "Time: " << timer.elapsed();
+//    qDebug() << "Time: " << timer.elapsed();
 }
 
 bool Game::LoadBoard(std::string filePath)
@@ -193,4 +193,9 @@ bool Game::IsContinouse()
 bool Game::IsCellAlive(int x, int y)
 {
     return board(x,y).IsAlive();
+}
+
+void Game::SetRule(std::string rule)
+{
+    this->rule = rule;
 }

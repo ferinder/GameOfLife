@@ -24,6 +24,7 @@ void ToggleCellState(int x, int y);
 void ToggleContinouse();
 bool IsContinouse();
 bool IsCellAlive(int x, int y);
+void SetRule(std::string rule);
 
 private:
 GameBoard board;
