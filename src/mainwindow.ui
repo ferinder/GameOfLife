@@ -34,7 +34,16 @@
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuRules">
+    <property name="title">
+     <string>Reguły</string>
+    </property>
+    <addaction name="actionChoose_rule"/>
+    <addaction name="actionAdd_rule"/>
+    <addaction name="actionDelete_rule"/>
+   </widget>
    <addaction name="menuPlik"/>
+   <addaction name="menuRules"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -74,6 +83,21 @@
    </property>
    <property name="text">
     <string>Run</string>
+   </property>
+  </action>
+  <action name="actionChoose_rule">
+   <property name="text">
+    <string>Wybierz regułę</string>
+   </property>
+  </action>
+  <action name="actionAdd_rule">
+   <property name="text">
+    <string>Dodaj regułę</string>
+   </property>
+  </action>
+  <action name="actionDelete_rule">
+   <property name="text">
+    <string>Usuń regułę</string>
    </property>
   </action>
  </widget>
