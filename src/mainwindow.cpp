@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionSaveBoard->setDisabled(true);
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()), this, SLOT(runSimulation()));
-    timer->setInterval(1000);
+    timer->setInterval(500);
 }
 
 MainWindow::~MainWindow()

@@ -29,6 +29,7 @@ private:
 GameBoard board;
 bool isSet;
 bool isContinouse;
+std::string rule;
 int calculateNeighbours(int x, int y);
 };
 
