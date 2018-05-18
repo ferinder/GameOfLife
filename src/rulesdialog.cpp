@@ -13,15 +13,20 @@ void RulesDialog::populateList(QListWidget *view)
 {
     view->clear();
     std::ifstream file("rules");
-    if(file.is_open())
+    if(!file.is_open())
     {
-        std::string line;
-        while(std::getline(file, line))
-        {
-            new QListWidgetItem(QString(line.c_str()),view);
-        }
+        qDebug() << "File opening error";
+        std::ofstream file("rules");
+        file << "23/3";
+        file.close();
     }
-    else qDebug() << "File opening error";
+
+    file.open("rules");
+    std::string line;
+    while(std::getline(file, line))
+    {
+        new QListWidgetItem(QString(line.c_str()),view);
+    }
     file.close();
 }
 
@@ -32,6 +37,7 @@ RulesDialog::~RulesDialog()
 
 std::string RulesDialog::GetRule()
 {
+    if(ui->list_rules->currentItem() == nullptr) return "";
     return ui->list_rules->currentItem()->text().toStdString();
 }
 
