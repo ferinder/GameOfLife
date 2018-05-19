@@ -132,3 +132,13 @@ void MainWindow::on_actionChoose_rule_triggered()
         this->game.SetRule(dlg.GetRuleFromDialog());
     }
 }
+
+void MainWindow::on_actionWybierz_regu_triggered()
+{
+    RulesDialog dlg(this);
+    if(dlg.exec() == QDialog::Accepted)
+    {
+        if(dlg.GetRule() == "") return;
+        this->game.SetRule(dlg.GetRule());
+    }
+}

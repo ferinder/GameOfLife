@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>290</width>
-    <height>70</height>
+    <width>350</width>
+    <height>141</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Wprowadź regułę</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>271</width>
-     <height>51</height>
+     <width>331</width>
+     <height>121</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -28,12 +28,21 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Wprowadź regułę gry</string>
+         <string>Wprowadź regułę gry w formacie &quot;L/D&quot; ,
+gdzie L - liczba komórek, przy których 
+żywa komórka ma przeżyć,
+D - liczba komórek przy których 
+martwa komórka użyje.
+Np. &quot;23/3&quot;.</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="line_edit_rule"/>
+       <widget class="QLineEdit" name="line_edit_rule">
+        <property name="text">
+         <string>23/3</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

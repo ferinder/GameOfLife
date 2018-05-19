@@ -6,12 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>250</width>
+    <height>150</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>250</width>
+    <height>150</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1920</width>
+    <height>1080</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Gra w życie</string>
   </property>
   <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
@@ -19,7 +31,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>250</width>
      <height>20</height>
     </rect>
    </property>
@@ -32,15 +44,8 @@
     <addaction name="actionLoadBoard"/>
     <addaction name="actionSaveBoard"/>
     <addaction name="separator"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
-   </widget>
-   <widget class="QMenu" name="menuRules">
-    <property name="title">
-     <string>Reguły</string>
-    </property>
-    <addaction name="actionChoose_rule"/>
-    <addaction name="actionAdd_rule"/>
-    <addaction name="actionDelete_rule"/>
    </widget>
    <widget class="QMenu" name="menuEdycja">
     <property name="title">
@@ -49,10 +54,10 @@
     <addaction name="actionWybierz_regu"/>
     <addaction name="separator"/>
     <addaction name="actionUstawienia"/>
+    <addaction name="separator"/>
    </widget>
    <addaction name="menuPlik"/>
    <addaction name="menuEdycja"/>
-   <addaction name="menuRules"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
