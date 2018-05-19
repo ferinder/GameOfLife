@@ -16,10 +16,14 @@ void RulesDialog::populateList(QListWidget *view)
     if(!file.is_open())
     {
         qDebug() << "File opening error";
-        std::ofstream file("rules");
-        file << "23/3\n";
-        file.close();
+        {
+            std::ofstream file("rules");
+            file << "23/3\n";
+            file.close();
+        }
+        file.open("rules");
     }
+
     std::string line;
     while(std::getline(file, line))
     {

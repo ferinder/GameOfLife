@@ -106,6 +106,11 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
 
 }
 
+void MainWindow::setSimulationInterval(int interval)
+{
+    timer->setInterval(interval);
+}
+
 
 void MainWindow::on_actionLoadBoard_triggered()
 {
@@ -124,16 +129,16 @@ void MainWindow::on_actionSaveBoard_triggered()
     this->game.SaveBoard(filePath.toStdString());
 }
 
-void MainWindow::on_actionChoose_rule_triggered()
+void MainWindow::on_actionSetting_triggered()
 {
-    GetRuleDialog dlg(this);
+    PropertiesDialog dlg(this);
     if(dlg.exec() == QDialog::Accepted)
     {
-        this->game.SetRule(dlg.GetRuleFromDialog());
+        setSimulationInterval(dlg.GetSimulationTime());
     }
 }
 
-void MainWindow::on_actionWybierz_regu_triggered()
+void MainWindow::on_actionChooseRule_triggered()
 {
     RulesDialog dlg(this);
     if(dlg.exec() == QDialog::Accepted)

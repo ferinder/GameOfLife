@@ -1,14 +1,19 @@
 #include "propertiesdialog.h"
 #include "ui_propertiesdialog.h"
 
-propertiesDialog::propertiesDialog(QWidget *parent) :
+PropertiesDialog::PropertiesDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::propertiesDialog)
+    ui(new Ui::PropertiesDialog)
 {
     ui->setupUi(this);
 }
 
-propertiesDialog::~propertiesDialog()
+PropertiesDialog::~PropertiesDialog()
 {
     delete ui;
+}
+
+int PropertiesDialog::GetSimulationTime()
+{
+    return this->ui->spin_sim_time->value();
 }

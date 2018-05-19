@@ -4,19 +4,20 @@
 #include <QDialog>
 
 namespace Ui {
-class propertiesDialog;
+class PropertiesDialog;
 }
 
-class propertiesDialog : public QDialog
+class PropertiesDialog : public QDialog
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    explicit propertiesDialog(QWidget *parent = 0);
-    ~propertiesDialog();
+explicit PropertiesDialog(QWidget *parent = 0);
+~PropertiesDialog();
+int GetSimulationTime();
 
 private:
-    Ui::propertiesDialog *ui;
+Ui::PropertiesDialog *ui;
 };
 
 #endif // PROPERTIESDIALOG_H
