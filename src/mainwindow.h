@@ -9,6 +9,8 @@
 #include <QFileDialog>
 #include "game.h"
 #include "newboarddialog.h"
+#include "getruledialog.h"
+#include "rulesdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -30,6 +32,10 @@ void runSimulation();
 void on_actionLoadBoard_triggered();
 
 void on_actionSaveBoard_triggered();
+
+void on_actionChoose_rule_triggered();
+
+void on_actionWybierz_regu_triggered();
 
 private:
 void paintEvent(QPaintEvent *);

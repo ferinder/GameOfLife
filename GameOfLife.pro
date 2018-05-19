@@ -28,18 +28,25 @@ SOURCES += \
         src\cell.cpp\
         src\gameboard.cpp\
         src\game.cpp\
-        src\newboarddialog.cpp
+        src\newboarddialog.cpp \
+        src\getruledialog.cpp \
+        src\rulesdialog.cpp
 
 HEADERS += \
         src\mainwindow.h\
         src\cell.h\
         src\gameboard.h\
         src\game.h\
-        src\newboarddialog.h
+        src\newboarddialog.h \
+        src\getruledialog.h \
+        src\rulesdialog.h
 
 FORMS += \
         src\mainwindow.ui\
-        src\newboarddialog.ui
+        src\newboarddialog.ui \
+        src\getruledialog.ui \
+        src\rulesdialog.ui
+
 
 RESOURCES += \
         icons.qrc

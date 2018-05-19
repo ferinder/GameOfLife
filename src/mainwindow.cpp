@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionSaveBoard->setDisabled(true);
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()), this, SLOT(runSimulation()));
-    timer->setInterval(1000);
+    timer->setInterval(500);
 }
 
 MainWindow::~MainWindow()
@@ -122,4 +122,23 @@ void MainWindow::on_actionSaveBoard_triggered()
 {
     QString filePath = QFileDialog::getSaveFileName(this, tr("Save board"));
     this->game.SaveBoard(filePath.toStdString());
+}
+
+void MainWindow::on_actionChoose_rule_triggered()
+{
+    GetRuleDialog dlg(this);
+    if(dlg.exec() == QDialog::Accepted)
+    {
+        this->game.SetRule(dlg.GetRuleFromDialog());
+    }
+}
+
+void MainWindow::on_actionWybierz_regu_triggered()
+{
+    RulesDialog dlg(this);
+    if(dlg.exec() == QDialog::Accepted)
+    {
+        if(dlg.GetRule() == "") return;
+        this->game.SetRule(dlg.GetRule());
+    }
 }
