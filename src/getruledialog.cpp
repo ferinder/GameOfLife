@@ -6,6 +6,8 @@ GetRuleDialog::GetRuleDialog(QWidget *parent) :
     ui(new Ui::GetRuleDialog)
 {
     ui->setupUi(this);
+    QRegExpValidator * v = new QRegExpValidator(QRegExp("[1-9]{1,9}/{1,1}[1-9]{1,9}"));
+    ui->line_edit_rule->setValidator(v);
 }
 
 GetRuleDialog::~GetRuleDialog()

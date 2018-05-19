@@ -48,6 +48,7 @@ void RulesDialog::on_btn_add_clicked()
     GetRuleDialog dlg(this);
     if(dlg.exec() == QDialog::Accepted)
     {
+        if(dlg.GetRuleFromDialog() == "") return;
         std::ifstream fileBeforeAdd("rules");
         std::string line;
         std::string newRule = dlg.GetRuleFromDialog();
