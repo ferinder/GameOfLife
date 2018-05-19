@@ -9,8 +9,8 @@
 #include <QFileDialog>
 #include "game.h"
 #include "newboarddialog.h"
-#include "getruledialog.h"
 #include "rulesdialog.h"
+#include "propertiesdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -33,13 +33,14 @@ void on_actionLoadBoard_triggered();
 
 void on_actionSaveBoard_triggered();
 
-void on_actionChoose_rule_triggered();
+void on_actionSetting_triggered();
 
-void on_actionWybierz_regu_triggered();
+void on_actionChooseRule_triggered();
 
 private:
 void paintEvent(QPaintEvent *);
 void mouseReleaseEvent(QMouseEvent *ev);
+void setSimulationInterval(int interval);
 
 Ui::MainWindow *ui;
 QTimer *timer = nullptr;

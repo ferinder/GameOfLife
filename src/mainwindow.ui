@@ -51,9 +51,9 @@
     <property name="title">
      <string>Edycja</string>
     </property>
-    <addaction name="actionWybierz_regu"/>
+    <addaction name="actionChooseRule"/>
     <addaction name="separator"/>
-    <addaction name="actionUstawienia"/>
+    <addaction name="actionSetting"/>
     <addaction name="separator"/>
    </widget>
    <addaction name="menuPlik"/>
@@ -99,27 +99,12 @@
     <string>Run</string>
    </property>
   </action>
-  <action name="actionChoose_rule">
+  <action name="actionChooseRule">
    <property name="text">
     <string>Wybierz regułę</string>
    </property>
   </action>
-  <action name="actionAdd_rule">
-   <property name="text">
-    <string>Dodaj regułę</string>
-   </property>
-  </action>
-  <action name="actionDelete_rule">
-   <property name="text">
-    <string>Usuń regułę</string>
-   </property>
-  </action>
-  <action name="actionWybierz_regu">
-   <property name="text">
-    <string>Wybierz regułę</string>
-   </property>
-  </action>
-  <action name="actionUstawienia">
+  <action name="actionSetting">
    <property name="text">
     <string>Ustawienia</string>
    </property>
