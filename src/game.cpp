@@ -1,44 +1,68 @@
 #include "game.h"
 
 #include <QIODevice>
+#include <QTime>
 
 Game::Game()
 {
     isSet = false;
+    rule = "23/3";
 }
 
-void Game::RunSimulation(int steps)
+void Game::RunSimulation()
 {
-    for(int s = 0; s < steps; s++)
+//    QTime timer;
+//    timer.start();
+    int splitIndex = this->rule.find('/');
+    std::string live = this->rule.substr(0,splitIndex);
+    std::string die = this->rule.substr(splitIndex+1);
+    GameBoard newBoard(this->board);
+    int boardSizeX = this->board.GetSizeX();
+    int boardSizeY = this->board.GetSizeY();
+    qDebug() << "Rule: " << rule.c_str() << "live: " << live.c_str() << "Die: " << die.c_str();
+    for (int x = 0; x < boardSizeX; x++)
     {
-        GameBoard newBoard(this->board);
-        int boardSizeX = this->board.GetSizeX();
-        int boardSizeY = this->board.GetSizeY();
-        for (int x = 0; x < boardSizeX; x++)
+        for(int y = 0; y < boardSizeY; y++)
         {
-            for(int y = 0; y < boardSizeY; y++)
+            int AliveNeighbours = calculateNeighbours(x,y);
+            bool stateNeedsChange = false;
+            if(this->board(x,y).IsAlive())
             {
-                int AliveNeighbours = calculateNeighbours(x,y);
-                if(this->board(x,y).IsAlive())
+                for(auto ch : live)
                 {
-                    if(AliveNeighbours == 2 || AliveNeighbours == 3)
-                    { }
+                    if(AliveNeighbours != (int(ch) - 48))
+                    {
+                        stateNeedsChange = true;
+                    }
                     else
                     {
-                        newBoard(x,y).ToggleState();
-                    }
-                }
-                else
-                {
-                    if(AliveNeighbours == 3)
-                    {
-                        newBoard(x,y).ToggleState();
+                        stateNeedsChange = false;
+                        break;
                     }
                 }
             }
+            else
+            {
+                for(auto ch : die)
+                {
+                    if(AliveNeighbours != (int(ch) - 48))
+                    {
+                        stateNeedsChange = false;
+                    }
+                    else
+                    {
+                        stateNeedsChange = true;
+                        break;
+                    }
+                }
+            }
+//            qDebug() << "Cell:" << x << y << AliveNeighbours << board(x,y).IsAlive() << stateNeedsChange;
+            if(stateNeedsChange) newBoard(x,y).ToggleState();
+            stateNeedsChange = false;
         }
-        this->board = newBoard;
     }
+    this->board = newBoard;
+//    qDebug() << "Time: " << timer.elapsed();
 }
 
 bool Game::LoadBoard(std::string filePath)
@@ -152,18 +176,13 @@ void Game::ToggleCellState(int x, int y)
     this->board(x,y).ToggleState();
 }
 
-void Game::ToggleContinouse()
-{
-    if (isContinouse == false) isContinouse = true;
-    else isContinouse = false;
-}
-
-bool Game::IsContinouse()
-{
-    return isContinouse;
-}
 
 bool Game::IsCellAlive(int x, int y)
 {
     return board(x,y).IsAlive();
+}
+
+void Game::SetRule(std::string rule)
+{
+    this->rule = rule;
 }

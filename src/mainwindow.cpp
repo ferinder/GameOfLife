@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionSaveBoard->setDisabled(true);
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()), this, SLOT(runSimulation()));
-    timer->setInterval(1000);
+    timer->setInterval(500);
 }
 
 MainWindow::~MainWindow()
@@ -42,7 +42,8 @@ void MainWindow::on_actionNewBoard_triggered()
 
 void MainWindow::on_actionRun_triggered()
 {
-    if(!game.IsContinouse()) {
+    if(!game.IsSet()) return;
+    if(!timer->isActive()) {
         ui->actionRun->setIcon(QIcon(":/icons/src/icons/stop.png"));
         timer->start();
     }
@@ -50,12 +51,11 @@ void MainWindow::on_actionRun_triggered()
         ui->actionRun->setIcon(QIcon(":/icons/src/icons/play.png"));
         timer->stop();
     }
-    game.ToggleContinouse();
 }
 
 void MainWindow::runSimulation()
 {
-    game.RunSimulation(1);
+    game.RunSimulation();
     repaint();
 }
 
@@ -106,6 +106,11 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
 
 }
 
+void MainWindow::setSimulationInterval(int interval)
+{
+    timer->setInterval(interval);
+}
+
 
 void MainWindow::on_actionLoadBoard_triggered()
 {
@@ -122,4 +127,23 @@ void MainWindow::on_actionSaveBoard_triggered()
 {
     QString filePath = QFileDialog::getSaveFileName(this, tr("Save board"));
     this->game.SaveBoard(filePath.toStdString());
+}
+
+void MainWindow::on_actionSetting_triggered()
+{
+    PropertiesDialog dlg(this);
+    if(dlg.exec() == QDialog::Accepted)
+    {
+        setSimulationInterval(dlg.GetSimulationTime());
+    }
+}
+
+void MainWindow::on_actionChooseRule_triggered()
+{
+    RulesDialog dlg(this);
+    if(dlg.exec() == QDialog::Accepted)
+    {
+        if(dlg.GetRule() == "") return;
+        this->game.SetRule(dlg.GetRule());
+    }
 }

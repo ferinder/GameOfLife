@@ -6,15 +6,29 @@
 namespace Ui {
 class NewBoardDialog;
 }
-
+/*!
+ * \brief The NewBoardDialog class
+ */
 class NewBoardDialog : public QDialog
 {
 Q_OBJECT
 
 public:
+/*!
+ * \brief NewBoardDialog constructor.
+ * \param parent - pointer to parent object.
+ */
 explicit NewBoardDialog(QWidget *parent = 0);
 ~NewBoardDialog();
+/*!
+ * \brief Get board size x from dialog.
+ * \return board size x from dialog.
+ */
 int GetSizeX();
+/*!
+ * \brief Get board size y from dialog.
+ * \return board size y from dialog.
+ */
 int GetSizeY();
 
 private:
