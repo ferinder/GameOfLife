@@ -42,7 +42,8 @@ void MainWindow::on_actionNewBoard_triggered()
 
 void MainWindow::on_actionRun_triggered()
 {
-    if(!game.IsContinouse()) {
+    if(!game.IsSet()) return;
+    if(!timer->isActive()) {
         ui->actionRun->setIcon(QIcon(":/icons/src/icons/stop.png"));
         timer->start();
     }
@@ -50,12 +51,11 @@ void MainWindow::on_actionRun_triggered()
         ui->actionRun->setIcon(QIcon(":/icons/src/icons/play.png"));
         timer->stop();
     }
-    game.ToggleContinouse();
 }
 
 void MainWindow::runSimulation()
 {
-    game.RunSimulation(1);
+    game.RunSimulation();
     repaint();
 }
 
