@@ -1,6 +1,6 @@
 #ifndef CELL_H
 #define CELL_H
-
+#include <QColor>
 /*!
  * \brief The Cell class
  *
@@ -39,8 +39,12 @@ void SetState(bool alive);
  */
 void ToggleState();
 
+void SetColor(QColor color);
+QColor GetColor();
+
 private:
 bool alive; ///< Propertie holds cell state.
+QColor color;
 };
 
 #endif // CELL_H
