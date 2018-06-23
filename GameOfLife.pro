@@ -41,7 +41,8 @@ HEADERS += \
         src\newboarddialog.h \
         src\getruledialog.h \
         src\rulesdialog.h \
-        src\propertiesdialog.h
+        src\propertiesdialog.h \
+        src\colorruleenum.h
 
 FORMS += \
         src\mainwindow.ui\
