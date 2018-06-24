@@ -160,6 +160,10 @@ void MainWindow::on_actionLoadBoard_triggered()
                  ui->centralWidget->geometry().y() + 10);
     repaint();
     ui->actionSaveBoard->setEnabled(true);
+    if(game.GetColorRule()!=ColorRule::Default)
+        ui->actionChooseRule->setEnabled(false);
+    else
+        ui->actionChooseRule->setEnabled(true);
 }
 
 void MainWindow::on_actionSaveBoard_triggered()

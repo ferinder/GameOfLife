@@ -140,7 +140,13 @@ bool Game::LoadBoard(std::string filePath)
     if(file.is_open())
     {
         std::string line;
+
         std::getline(file, line);
+        this->SetColorRule(std::stoi(line));
+        if(this->GetColorRule() != ColorRule::Default)
+            this->SetRule("23/3");
+
+        std::getline(file,line);
         int sizeX = std::stoi(line);
 
         std::getline(file, line);
@@ -152,18 +158,39 @@ bool Game::LoadBoard(std::string filePath)
         std::getline(file, line);
         for(auto ch : line)
         {
-            if(ch == '0')
-            {
+            switch (ch) {
+            case '0':
                 cells.push_back(Cell(false));
-            }
-            else if(ch == '1')
-            {
-                cells.push_back(Cell(true));
-            }
-            else
-            {
+                break;
+            case '1': //red
+                cells.push_back(Cell(true, Qt::red));
+                break;
+            case '2': //blue
+                cells.push_back(Cell(true, Qt::blue));
+                break;
+            case '3': //green
+                cells.push_back(Cell(true, Qt::green));
+                break;
+            case '4': //magenta
+                cells.push_back(Cell(true, Qt::magenta));
+                break;
+            default:
                 qDebug() << "Error with getting cell state!";
+                break;
             }
+/*            if(ch == '0')
+   //            {
+   //                cells.push_back(Cell(false));
+   //            }
+   //            else if(ch == '1')
+   //            {
+   //                cells.push_back(Cell(true));
+   //            }
+   //            else
+   //            {
+   //                qDebug() << "Error with getting cell state!";
+   //            }
+ */
         }
         file.close();
         this->board = GameBoard(sizeX, sizeY, cells);
