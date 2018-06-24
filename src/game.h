@@ -84,7 +84,7 @@ void SetRule(std::string rule);
 
 void SetCellColor(int x, int y, QColor color);
 
-QColor  GetCellColor(int x, int y);
+QColor GetCellColor(int x, int y);
 
 void SetColorRule(int colorRule);
 

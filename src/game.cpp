@@ -62,10 +62,9 @@ void Game::calculateNewBoard(GameBoard &newBoard)
 
 void Game::colorNewBoard(GameBoard &newBoard)
 {
-    switch (this->colorRule) {
-    case ColorRule::Default:
+    int cellNumber = newBoard.GetSizeX() * newBoard.GetSizeY();
+    if(this->colorRule == Default)
     {
-        int cellNumber = newBoard.GetSizeX() * newBoard.GetSizeY();
         for(int i = 0; i < cellNumber; i++)
         {
             if(newBoard(i).IsAlive())
@@ -74,10 +73,8 @@ void Game::colorNewBoard(GameBoard &newBoard)
                 newBoard(i).SetColor(Qt::white);
         }
     }
-    break;
-    case ColorRule::Immigration:
+    else
     {
-        int cellNumber = newBoard.GetSizeX() * newBoard.GetSizeY();
         bool cellCameAlive = false;
         for(int i = 0; i < cellNumber; i++)
         {
@@ -91,13 +88,8 @@ void Game::colorNewBoard(GameBoard &newBoard)
                 int idxX = i % this->GetBoardSizeX();
                 int idxY = i / this->GetBoardSizeX();
                 std::vector<Cell> oldNeighbours = getNeighbours(this->board, idxX, idxY);
-                int aliveOldNeighbours = calculateNeighbours(oldNeighbours);
-
-                if(aliveOldNeighbours == 3)
-                {
-                    QColor color = getMostColor(oldNeighbours, ColorRule::Immigration);
-                    newBoard(i).SetColor(color);
-                }
+                QColor color = getMostColor(oldNeighbours, this->colorRule);
+                newBoard(i).SetColor(color);
             }
             else
             {
@@ -107,16 +99,6 @@ void Game::colorNewBoard(GameBoard &newBoard)
                     newBoard(i).SetColor(Qt::white);
             }
         }
-
-    }
-    break;
-    case ColorRule::QuadLife:
-    {
-
-    }
-    break;
-    default:
-        break;
     }
 }
 
@@ -179,6 +161,8 @@ bool Game::LoadBoard(std::string filePath)
                 break;
             default:
                 qDebug() << "Error with getting cell state!";
+                file.close();
+                return false;
                 break;
             }
         }
@@ -247,23 +231,53 @@ QColor Game::getMostColor(std::vector<Cell> &neighbours, int colorRule)
     QColor mostColor;
     switch (colorRule) {
     case ColorRule::Default:
+        mostColor = Qt::black;
         break;
     case ColorRule::Immigration:
     {
         int red = 0;
-        int yellow = 0;
+        int blue = 0;
         for(auto it : neighbours)
         {
-            if(it.GetColor() == Qt::red) red += 1;
-            else yellow += 0;
+            QColor color = it.GetColor();
+            if(color == Qt::red)
+                red += 1;
+            else if(color == Qt::blue)
+                blue += 1;
         }
-        if(red > yellow) mostColor = Qt::red;
+        if(red > blue) mostColor = Qt::red;
         else mostColor = Qt::blue;
     }
     break;
     case ColorRule::QuadLife:
     {
+        std::vector<std::pair<QColor, int> > neighboursColors;
+        neighboursColors.push_back(std::make_pair(Qt::red, 0));
+        neighboursColors.push_back(std::make_pair(Qt::blue, 0));
+        neighboursColors.push_back(std::make_pair(Qt::green, 0));
+        neighboursColors.push_back(std::make_pair(Qt::magenta, 0));
 
+        for(auto it : neighbours)
+        {
+            QColor color = it.GetColor();
+            if(color == Qt::red)
+                neighboursColors[0].second += 1;
+            else if(color == Qt::blue)
+                neighboursColors[1].second += 1;
+            else if(color == Qt::green)
+                neighboursColors[2].second += 1;
+            else if(color == Qt::magenta)
+                neighboursColors[3].second += 1;
+        }
+        std::sort(neighboursColors.begin(),neighboursColors.end(),
+                  [](std::pair<QColor, int> a, std::pair<QColor, int> b)
+            {
+                return a.second > b.second;
+            });
+        if(neighboursColors[0].second == 1)
+            mostColor = neighboursColors[3].first;
+        else
+            mostColor = neighboursColors[0].first;
     }
     break;
     default:

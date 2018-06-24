@@ -134,6 +134,29 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
                         game.ToggleCellState(cellX, cellY);
                     }
                 }
+                break;
+            case ColorRule::QuadLife:
+                if(!game.IsCellAlive(cellX, cellY))
+                {
+                    game.ToggleCellState(cellX, cellY);
+                    game.SetCellColor(cellX, cellY, Qt::red);
+                }
+                else
+                {
+                    QColor cellColor = game.GetCellColor(cellX, cellY);
+                    if(cellColor == Qt::red)
+                        game.SetCellColor(cellX, cellY, Qt::blue);
+                    else if(cellColor == Qt::blue)
+                        game.SetCellColor(cellX, cellY, Qt::green);
+                    else if(cellColor == Qt::green)
+                        game.SetCellColor(cellX, cellY, Qt::magenta);
+                    else
+                    {
+                        game.ToggleCellState(cellX, cellY);
+                        game.SetCellColor(cellX, cellY, Qt::white);
+                    }
+                }
+                break;
             default:
                 break;
             }
