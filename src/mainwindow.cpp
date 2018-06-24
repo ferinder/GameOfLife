@@ -10,7 +10,14 @@ MainWindow::MainWindow(QWidget *parent) :
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()), this, SLOT(runSimulation()));
     timer->setInterval(500);
+    settings->SetSimulationInterval(500);
 }
+
+int MainWindow::GetSimulationStepTime()
+{
+    return this->timer->interval();
+}
+
 
 MainWindow::~MainWindow()
 {
@@ -102,8 +109,14 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
 {
     int posX = ev->x() - ui->centralWidget->geometry().x() - 5;
     int posY = ev->y() - ui->centralWidget->geometry().y() - 5;
+    if(posX < 0 || posY < 0) return;
     int cellX = posX/(cellSize + 1);
     int cellY = posY/(cellSize + 1);
+    if(cellX >= game.GetBoardSizeX() ||
+       cellY >= game.GetBoardSizeY() ||
+       cellX < 0 ||
+       cellY < 0)
+        return;
     if(posX%(cellSize + 1) != 5 && posY%(cellSize + 1) != 5)
     {
         if(game.IsSet())
@@ -168,11 +181,6 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
 
 }
 
-void MainWindow::setSimulationInterval(int interval)
-{
-    timer->setInterval(interval);
-}
-
 
 void MainWindow::on_actionLoadBoard_triggered()
 {
@@ -200,7 +208,9 @@ void MainWindow::on_actionSetting_triggered()
     PropertiesDialog dlg(this);
     if(dlg.exec() == QDialog::Accepted)
     {
-        setSimulationInterval(dlg.GetSimulationTime());
+        timer->setInterval(dlg.GetSimulationTime());
+        settings->SetSimulationInterval(dlg.GetSimulationTime());
+        settings->SetBoardWraping(dlg.GetBoardWrapingSetting());
     }
 }
 
