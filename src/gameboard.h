@@ -35,12 +35,12 @@ GameBoard(int sizeX, int sizeY, std::vector<Cell> cells);
  * \brief Method for retriving game board size x.
  * \return  size x.
  */
-int GetSizeX();
+int GetSizeX() const;
 /*!
  * \brief Method for retriving game board size y.
  * \return size y.
  */
-int GetSizeY();
+int GetSizeY() const;
 /*!
  * \brief Overrided operator () for retriving game board cell with x and y coordinates.
  * \param x - x coordinate of cell on board,

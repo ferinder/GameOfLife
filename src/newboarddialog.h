@@ -2,6 +2,8 @@
 #define NEWBOARDDIALOG_H
 
 #include <QDialog>
+#include "colorruleenum.h"
+#include <string>
 
 namespace Ui {
 class NewBoardDialog;
@@ -30,6 +32,7 @@ int GetSizeX();
  * \return board size y from dialog.
  */
 int GetSizeY();
+int GetColorRule();
 
 private:
 Ui::NewBoardDialog *ui;

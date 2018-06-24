@@ -29,13 +29,32 @@ void MainWindow::on_actionNewBoard_triggered()
     if(dlg.exec() == QDialog::Accepted)
     {
         game.NewBoard(dlg.GetSizeX(),dlg.GetSizeY());
+        game.SetColorRule(dlg.GetColorRule());
         ui->actionSaveBoard->setEnabled(true);
+        if(dlg.GetColorRule() != ColorRule::Default)
+        {
+            ui->actionChooseRule->setEnabled(false);
+            game.SetRule("23/3");
+            game.ToggleCellState(2, 2);
+            game.SetCellColor(2, 2, Qt::red);
+            game.ToggleCellState(2, 3);
+            game.SetCellColor(2, 3, Qt::red);
+            game.ToggleCellState(2, 4);
+            game.SetCellColor(2, 4, Qt::red);
+        }
+        else
+        {
+            ui->actionChooseRule->setEnabled(true);
+            game.ToggleCellState(2, 2);
+            game.SetCellColor(2, 2, Qt::black);
+            game.ToggleCellState(2, 3);
+            game.SetCellColor(2, 3, Qt::black);
+            game.ToggleCellState(2, 4);
+            game.SetCellColor(2, 4, Qt::black);
+        }
         this->resize(game.GetBoardSizeX() * (cellSize + 1) + 10,
                      game.GetBoardSizeY() * (cellSize + 1) +
                      ui->centralWidget->geometry().y() + 10);
-        game.ToggleCellState(2, 2);
-        game.ToggleCellState(2, 3);
-        game.ToggleCellState(2, 4);
         repaint();
     }
 }
@@ -71,16 +90,8 @@ void MainWindow::paintEvent(QPaintEvent *)
         windowCoordinateY = widgetCoordinateStartY;
         for( int y = 0; y < game.GetBoardSizeY(); y++)
         {
-            if(game.IsCellAlive(x, y))
-            {
-                myPainter.fillRect(windowCoordinateX, windowCoordinateY,
-                                   cellSize, cellSize, Qt::black);
-            }
-            else
-            {
-                myPainter.fillRect(windowCoordinateX, windowCoordinateY,
-                                   cellSize, cellSize, Qt::white);
-            }
+            myPainter.fillRect(windowCoordinateX, windowCoordinateY,
+                               cellSize, cellSize, game.GetCellColor(x,y));
             windowCoordinateY += cellSize + 1;
         }
         windowCoordinateX += cellSize + 1;
@@ -97,7 +108,58 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
     {
         if(game.IsSet())
         {
-            game.ToggleCellState(cellX, cellY);
+            switch (game.GetColorRule()) {
+            case ColorRule::Default:
+                if(game.IsCellAlive(cellX, cellY))
+                    game.SetCellColor(cellX, cellY, Qt::white);
+                else
+                    game.SetCellColor(cellX, cellY, Qt::black);
+                game.ToggleCellState(cellX, cellY);
+                break;
+            case ColorRule::Immigration:
+                if(!game.IsCellAlive(cellX, cellY))
+                {
+                    game.ToggleCellState(cellX, cellY);
+                    game.SetCellColor(cellX, cellY, Qt::red);
+                }
+                else
+                {
+                    if(game.GetCellColor(cellX, cellY) == Qt::red)
+                    {
+                        game.SetCellColor(cellX,cellY, Qt::blue);
+                    }
+                    else
+                    {
+                        game.SetCellColor(cellX, cellY, Qt::white);
+                        game.ToggleCellState(cellX, cellY);
+                    }
+                }
+                break;
+            case ColorRule::QuadLife:
+                if(!game.IsCellAlive(cellX, cellY))
+                {
+                    game.ToggleCellState(cellX, cellY);
+                    game.SetCellColor(cellX, cellY, Qt::red);
+                }
+                else
+                {
+                    QColor cellColor = game.GetCellColor(cellX, cellY);
+                    if(cellColor == Qt::red)
+                        game.SetCellColor(cellX, cellY, Qt::blue);
+                    else if(cellColor == Qt::blue)
+                        game.SetCellColor(cellX, cellY, Qt::green);
+                    else if(cellColor == Qt::green)
+                        game.SetCellColor(cellX, cellY, Qt::magenta);
+                    else
+                    {
+                        game.ToggleCellState(cellX, cellY);
+                        game.SetCellColor(cellX, cellY, Qt::white);
+                    }
+                }
+                break;
+            default:
+                break;
+            }
             repaint();
         }
     }
@@ -121,6 +183,10 @@ void MainWindow::on_actionLoadBoard_triggered()
                  ui->centralWidget->geometry().y() + 10);
     repaint();
     ui->actionSaveBoard->setEnabled(true);
+    if(game.GetColorRule()!=ColorRule::Default)
+        ui->actionChooseRule->setEnabled(false);
+    else
+        ui->actionChooseRule->setEnabled(true);
 }
 
 void MainWindow::on_actionSaveBoard_triggered()
