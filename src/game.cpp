@@ -162,35 +162,25 @@ bool Game::LoadBoard(std::string filePath)
             case '0':
                 cells.push_back(Cell(false));
                 break;
-            case '1': //red
+            case '1': //black
+                cells.push_back(Cell(true));
+                break;
+            case '2': //red
                 cells.push_back(Cell(true, Qt::red));
                 break;
-            case '2': //blue
+            case '3': //blue
                 cells.push_back(Cell(true, Qt::blue));
                 break;
-            case '3': //green
+            case '4': //green
                 cells.push_back(Cell(true, Qt::green));
                 break;
-            case '4': //magenta
+            case '5': //magenta
                 cells.push_back(Cell(true, Qt::magenta));
                 break;
             default:
                 qDebug() << "Error with getting cell state!";
                 break;
             }
-/*            if(ch == '0')
-   //            {
-   //                cells.push_back(Cell(false));
-   //            }
-   //            else if(ch == '1')
-   //            {
-   //                cells.push_back(Cell(true));
-   //            }
-   //            else
-   //            {
-   //                qDebug() << "Error with getting cell state!";
-   //            }
- */
         }
         file.close();
         this->board = GameBoard(sizeX, sizeY, cells);
@@ -211,6 +201,7 @@ void Game::SaveBoard(std::string filepath)
     file.open(filepath);
     if(file.is_open())
     {
+        file << this->GetColorRule() << '\n';
         file << this->GetBoardSizeX() << '\n';
         file << this->GetBoardSizeY() << '\n';
 
@@ -220,7 +211,17 @@ void Game::SaveBoard(std::string filepath)
         {
             if(this->board(idx).IsAlive())
             {
-                file.put('1');
+                QColor color = this->board(idx).GetColor();
+                if(color == Qt::black)
+                    file.put('1');
+                else if(color == Qt::red)
+                    file.put('2');
+                else if(color == Qt::blue)
+                    file.put('3');
+                else if(color == Qt::green)
+                    file.put('4');
+                else if(color == Qt::magenta)
+                    file.put('5');
             }
             else
             {
