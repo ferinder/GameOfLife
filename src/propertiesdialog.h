@@ -2,6 +2,8 @@
 #define PROPERTIESDIALOG_H
 
 #include <QDialog>
+#include "mainwindow.h"
+#include "gamesettings.h"
 
 namespace Ui {
 class PropertiesDialog;
@@ -25,6 +27,8 @@ explicit PropertiesDialog(QWidget *parent = 0);
  * \return simulation time from properties dialog.
  */
 int GetSimulationTime();
+
+bool GetBoardWrapingSetting();
 
 private:
 Ui::PropertiesDialog *ui;
