@@ -24,12 +24,12 @@ GameBoard::GameBoard(int sizeX, int sizeY, std::vector<Cell> cells)
     this->board = cells;
 }
 
-int GameBoard::GetSizeX()
+int GameBoard::GetSizeX() const
 {
     return this->sizeX;
 }
 
-int GameBoard::GetSizeY()
+int GameBoard::GetSizeY() const
 {
     return this->sizeY;
 }
