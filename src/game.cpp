@@ -7,24 +7,22 @@ Game::Game()
 {
     isSet = false;
     rule = "23/3";
+    colorRule = ColorRule::Default;
 }
 
-void Game::RunSimulation()
+void Game::calculateNewBoard(GameBoard &newBoard)
 {
-//    QTime timer;
-//    timer.start();
+    int boardSizeX = newBoard.GetSizeX();
+    int boardSizeY = newBoard.GetSizeY();
     int splitIndex = this->rule.find('/');
     std::string live = this->rule.substr(0,splitIndex);
     std::string die = this->rule.substr(splitIndex+1);
-    GameBoard newBoard(this->board);
-    int boardSizeX = this->board.GetSizeX();
-    int boardSizeY = this->board.GetSizeY();
-    qDebug() << "Rule: " << rule.c_str() << "live: " << live.c_str() << "Die: " << die.c_str();
     for (int x = 0; x < boardSizeX; x++)
     {
         for(int y = 0; y < boardSizeY; y++)
         {
-            int AliveNeighbours = calculateNeighbours(x,y);
+            std::vector<Cell> neighbours = getNeighbours(this->board, x, y);
+            int AliveNeighbours = calculateNeighbours(neighbours);
             bool stateNeedsChange = false;
             if(this->board(x,y).IsAlive())
             {
@@ -56,14 +54,78 @@ void Game::RunSimulation()
                     }
                 }
             }
-//            qDebug() << "Cell:" << x << y << AliveNeighbours << board(x,y).IsAlive() << stateNeedsChange;
             if(stateNeedsChange) newBoard(x,y).ToggleState();
             stateNeedsChange = false;
         }
     }
-    this->board = newBoard;
-//    qDebug() << "Time: " << timer.elapsed();
 }
+
+void Game::colorNewBoard(GameBoard &newBoard)
+{
+    switch (this->colorRule) {
+    case ColorRule::Default:
+    {
+        int cellNumber = newBoard.GetSizeX() * newBoard.GetSizeY();
+        for(int i = 0; i < cellNumber; i++)
+        {
+            if(newBoard(i).IsAlive())
+                newBoard(i).SetColor(Qt::black);
+            else
+                newBoard(i).SetColor(Qt::white);
+        }
+    }
+    break;
+    case ColorRule::Immigration:
+    {
+        int cellNumber = newBoard.GetSizeX() * newBoard.GetSizeY();
+        bool cellCameAlive = false;
+        for(int i = 0; i < cellNumber; i++)
+        {
+            if((!this->board(i).IsAlive() && newBoard(i).IsAlive()))
+                cellCameAlive = true;
+            else
+                cellCameAlive = false;
+
+            if(cellCameAlive)
+            {
+                int idxX = i % this->GetBoardSizeX();
+                int idxY = i / this->GetBoardSizeX();
+                std::vector<Cell> oldNeighbours = getNeighbours(this->board, idxX, idxY);
+                int aliveOldNeighbours = calculateNeighbours(oldNeighbours);
+
+                if(aliveOldNeighbours == 3)
+                {
+                    QColor color = getMostColor(oldNeighbours, ColorRule::Immigration);
+                    newBoard(i).SetColor(color);
+                }
+            }
+        }
+
+    }
+    break;
+    case ColorRule::QuadLife:
+    {
+
+    }
+    break;
+    default:
+        break;
+    }
+}
+
+void Game::RunSimulation()
+{
+    QTime timer;
+    timer.start();
+    GameBoard newBoard(this->board);
+//    qDebug() << "Rule: " << rule.c_str() << "live: " << live.c_str() << "Die: " << die.c_str();
+    calculateNewBoard(newBoard);
+    colorNewBoard(newBoard);
+    this->board = newBoard;
+    qDebug() << "Time: " << timer.elapsed();
+}
+
+
 
 bool Game::LoadBoard(std::string filePath)
 {
@@ -135,6 +197,46 @@ void Game::SaveBoard(std::string filepath)
     }
 }
 
+int Game::calculateNeighbours(std::vector<Cell> & neighbours)
+{
+    int aliveNeighbours = 0;
+    for(auto it = neighbours.cbegin(); it != neighbours.cend(); it++)
+    {
+        if( (*it).IsAlive()) aliveNeighbours += 1;
+    }
+    return aliveNeighbours;
+}
+
+QColor Game::getMostColor(std::vector<Cell> &neighbours, int colorRule)
+{
+    QColor mostColor;
+    switch (colorRule) {
+    case ColorRule::Default:
+        break;
+    case ColorRule::Immigration:
+    {
+        int red = 0;
+        int yellow = 0;
+        for(auto it : neighbours)
+        {
+            if(it.GetColor() == Qt::red) red += 1;
+            else yellow += 0;
+        }
+        if(red > yellow) mostColor = Qt::red;
+        else mostColor = Qt::yellow;
+    }
+    break;
+    case ColorRule::QuadLife:
+    {
+
+    }
+    break;
+    default:
+        break;
+    }
+    return mostColor;
+}
+
 int Game::calculateNeighbours(int x, int y)
 {
     int aliveNeighbours = 0;
@@ -148,6 +250,30 @@ int Game::calculateNeighbours(int x, int y)
         }
     }
     return aliveNeighbours;
+}
+
+std::vector<Cell> Game::getNeighbours(GameBoard& board, int x, int y)
+{
+    std::vector<Cell> neighbours;
+    neighbours.reserve(8);
+    int boardSizeX = board.GetSizeX();
+    int boardSizeY = board.GetSizeY();
+    int idxX, idxY;
+    for(int i = -1; i < 2; i++)
+    {
+        if( (x + i) < 0) idxX = boardSizeX - 1;
+        else if( (x + i) >= boardSizeX) idxX = 0;
+        else idxX = x + i;
+        for (int j = -1; j < 2; j++)
+        {
+            if( i == 0 && j == 0) continue;
+            if( (y + j) < 0) idxY = boardSizeY - 1;
+            else if( (y + j) >= boardSizeY) idxY = 0;
+            else idxY = y + j;
+            neighbours.push_back(board(idxX, idxY));
+        }
+    }
+    return neighbours;
 }
 
 void Game::NewBoard(int sizeX, int sizeY)
@@ -175,7 +301,6 @@ void Game::ToggleCellState(int x, int y)
 {
     this->board(x,y).ToggleState();
 }
-
 
 bool Game::IsCellAlive(int x, int y)
 {

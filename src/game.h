@@ -7,6 +7,7 @@
 #include <fstream>
 #include <vector>
 #include <QDebug>
+#include "colorruleenum.h"
 /*!
  * \brief The Game class
  *
@@ -85,7 +86,14 @@ private:
 GameBoard board;
 bool isSet;
 std::string rule;
+int colorRule;
+
 int calculateNeighbours(int x, int y);
+std::vector<Cell> getNeighbours(GameBoard &board, int x, int y);
+void calculateNewBoard(GameBoard& newBoard);
+void colorNewBoard(GameBoard& newBoard);
+int calculateNeighbours(std::vector<Cell> &neighbours);
+QColor getMostColor(std::vector<Cell> &neighbours, int colorRule);
 };
 
 #endif // GAME_H
