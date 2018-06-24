@@ -3,19 +3,25 @@
 Cell::Cell()
 {
     this->alive = false;
-    this->color = Qt::black;
+    this->color = Qt::white;
 }
 
 Cell::Cell(bool alive)
 {
     this->alive = alive;
-    this->color = Qt::black;
+    if(alive)
+        this->color = Qt::black;
+    else
+        this->color = Qt::white;
 }
 
 Cell::Cell(bool alive, QColor color)
 {
     this->alive = alive;
-    this->color = color;
+    if(alive)
+        this->color = color;
+    else
+        this->color = Qt::white;
 }
 
 bool Cell::IsAlive() const
