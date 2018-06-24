@@ -31,7 +31,8 @@ SOURCES += \
         src\newboarddialog.cpp \
         src\getruledialog.cpp \
         src\rulesdialog.cpp \
-        src\propertiesdialog.cpp
+        src\propertiesdialog.cpp \
+    src/gamesettings.cpp
 
 HEADERS += \
         src\mainwindow.h\
@@ -41,7 +42,9 @@ HEADERS += \
         src\newboarddialog.h \
         src\getruledialog.h \
         src\rulesdialog.h \
-        src\propertiesdialog.h
+        src\propertiesdialog.h \
+        src\colorruleenum.h \
+    src/gamesettings.h
 
 FORMS += \
         src\mainwindow.ui\

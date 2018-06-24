@@ -7,6 +7,8 @@
 #include <fstream>
 #include <vector>
 #include <QDebug>
+#include "colorruleenum.h"
+#include "gamesettings.h"
 /*!
  * \brief The Game class
  *
@@ -81,11 +83,32 @@ bool IsCellAlive(int x, int y);
  */
 void SetRule(std::string rule);
 
+void SetCellColor(int x, int y, QColor color);
+
+QColor GetCellColor(int x, int y);
+
+void SetColorRule(int colorRule);
+
+int GetColorRule();
+
+bool GetBoardWraping();
+
+void SetBoardWraping(bool wraping);
+
 private:
 GameBoard board;
 bool isSet;
 std::string rule;
+int colorRule;
+
+GameSettings *settings = GameSettings::GetInstance();
+
 int calculateNeighbours(int x, int y);
+std::vector<Cell> getNeighbours(GameBoard &board, int x, int y);
+void calculateNewBoard(GameBoard& newBoard);
+void colorNewBoard(GameBoard& newBoard);
+int calculateNeighbours(std::vector<Cell> &neighbours);
+QColor getMostColor(std::vector<Cell> &neighbours, int colorRule);
 };
 
 #endif // GAME_H

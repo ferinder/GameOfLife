@@ -11,6 +11,7 @@
 #include "newboarddialog.h"
 #include "rulesdialog.h"
 #include "propertiesdialog.h"
+#include "gamesettings.h"
 
 namespace Ui {
 class MainWindow;
@@ -28,6 +29,8 @@ public:
  * \param parent - pointer to parent object.
  */
 explicit MainWindow(QWidget *parent = 0);
+int GetSimulationStepTime();
+bool GetBoardWraping();
 ~MainWindow();
 
 private slots:
@@ -47,6 +50,7 @@ void setSimulationInterval(int interval);
 
 Ui::MainWindow *ui;
 QTimer *timer = nullptr;
+GameSettings *settings = GameSettings::GetInstance();
 
 Game game;
 static const int cellSize = 5;
