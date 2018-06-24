@@ -8,6 +8,7 @@
 #include <vector>
 #include <QDebug>
 #include "colorruleenum.h"
+#include "gamesettings.h"
 /*!
  * \brief The Game class
  *
@@ -90,11 +91,17 @@ void SetColorRule(int colorRule);
 
 int GetColorRule();
 
+bool GetBoardWraping();
+
+void SetBoardWraping(bool wraping);
+
 private:
 GameBoard board;
 bool isSet;
 std::string rule;
 int colorRule;
+
+GameSettings *settings = GameSettings::GetInstance();
 
 int calculateNeighbours(int x, int y);
 std::vector<Cell> getNeighbours(GameBoard &board, int x, int y);

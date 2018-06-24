@@ -119,64 +119,74 @@ void Game::RunSimulation()
 bool Game::LoadBoard(std::string filePath)
 {
     std::ifstream file(filePath);
-    if(file.is_open())
+    int colorRule;
+    int sizeX, sizeY;
+    std::vector<Cell> cells;
+    try
     {
-        std::string line;
-
-        std::getline(file, line);
-        this->SetColorRule(std::stoi(line));
-        if(this->GetColorRule() != ColorRule::Default)
-            this->SetRule("23/3");
-
-        std::getline(file,line);
-        int sizeX = std::stoi(line);
-
-        std::getline(file, line);
-        int sizeY = std::stoi(line);
-
-        std::vector<Cell> cells;
-        cells.reserve(sizeX * sizeY);
-
-        std::getline(file, line);
-        for(auto ch : line)
+        if(file.is_open())
         {
-            switch (ch) {
-            case '0':
-                cells.push_back(Cell(false));
-                break;
-            case '1': //black
-                cells.push_back(Cell(true));
-                break;
-            case '2': //red
-                cells.push_back(Cell(true, Qt::red));
-                break;
-            case '3': //blue
-                cells.push_back(Cell(true, Qt::blue));
-                break;
-            case '4': //green
-                cells.push_back(Cell(true, Qt::green));
-                break;
-            case '5': //magenta
-                cells.push_back(Cell(true, Qt::magenta));
-                break;
-            default:
-                qDebug() << "Error with getting cell state!";
-                file.close();
-                return false;
-                break;
+            std::string line;
+
+            std::getline(file, line);
+            colorRule = std::stoi(line);
+            if(colorRule > 3) throw "ziemniak";
+
+            std::getline(file,line);
+            sizeX = std::stoi(line);
+
+            std::getline(file, line);
+            sizeY = std::stoi(line);
+
+            cells.reserve(sizeX * sizeY);
+
+            std::getline(file, line);
+            for(auto ch : line)
+            {
+                switch (ch) {
+                case '0':
+                    cells.push_back(Cell(false));
+                    break;
+                case '1': //black
+                    cells.push_back(Cell(true));
+                    break;
+                case '2': //red
+                    cells.push_back(Cell(true, Qt::red));
+                    break;
+                case '3': //blue
+                    cells.push_back(Cell(true, Qt::blue));
+                    break;
+                case '4': //green
+                    cells.push_back(Cell(true, Qt::green));
+                    break;
+                case '5': //magenta
+                    cells.push_back(Cell(true, Qt::magenta));
+                    break;
+                default:
+                    qDebug() << "Error with getting cell state!";
+                    file.close();
+                    return false;
+                    break;
+                }
             }
+            file.close();
         }
-        file.close();
-        this->board = GameBoard(sizeX, sizeY, cells);
-        isSet = true;
-        return true;
+        else
+            throw "ziemniak";
     }
-    else
+    catch(...)
     {
+        file.close();
         qDebug() << "Error with reading file!";
         return false;
     }
 
+    this->board = GameBoard(sizeX, sizeY, cells);
+    isSet = true;
+    this->SetColorRule(colorRule);
+    if(this->GetColorRule() != ColorRule::Default)
+        this->SetRule("23/3");
+    return true;
 }
 
 void Game::SaveBoard(std::string filepath)
@@ -304,21 +314,35 @@ int Game::calculateNeighbours(int x, int y)
 std::vector<Cell> Game::getNeighbours(GameBoard& board, int x, int y)
 {
     std::vector<Cell> neighbours;
-    neighbours.reserve(8);
     int boardSizeX = board.GetSizeX();
     int boardSizeY = board.GetSizeY();
     int idxX, idxY;
     for(int i = -1; i < 2; i++)
     {
-        if( (x + i) < 0) idxX = boardSizeX - 1;
-        else if( (x + i) >= boardSizeX) idxX = 0;
-        else idxX = x + i;
+        if( (x + i) < 0)
+            idxX = boardSizeX - 1;
+        else if( (x + i) >= boardSizeX)
+            idxX = 0;
+        else
+            idxX = x + i;
         for (int j = -1; j < 2; j++)
         {
-            if( i == 0 && j == 0) continue;
-            if( (y + j) < 0) idxY = boardSizeY - 1;
-            else if( (y + j) >= boardSizeY) idxY = 0;
-            else idxY = y + j;
+            if(!settings->GetBoardWraping())
+            {
+                if(    x + i < 0
+                       || x + i >= boardSizeX
+                       || y + j < 0
+                       || y + j >= boardSizeY)
+                    continue;
+            }
+            if( i == 0 && j == 0)
+                continue;
+            if( (y + j) < 0)
+                idxY = boardSizeY - 1;
+            else if( (y + j) >= boardSizeY)
+                idxY = 0;
+            else
+                idxY = y + j;
             neighbours.push_back(board(idxX, idxY));
         }
     }
