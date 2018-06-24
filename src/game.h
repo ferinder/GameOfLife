@@ -82,6 +82,14 @@ bool IsCellAlive(int x, int y);
  */
 void SetRule(std::string rule);
 
+void SetCellColor(int x, int y, QColor color);
+
+QColor  GetCellColor(int x, int y);
+
+void SetColorRule(int colorRule);
+
+int GetColorRule();
+
 private:
 GameBoard board;
 bool isSet;

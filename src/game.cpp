@@ -99,6 +99,13 @@ void Game::colorNewBoard(GameBoard &newBoard)
                     newBoard(i).SetColor(color);
                 }
             }
+            else
+            {
+                if(newBoard(i).IsAlive())
+                    newBoard(i).SetColor(this->board(i).GetColor());
+                else
+                    newBoard(i).SetColor(Qt::white);
+            }
         }
 
     }
@@ -223,7 +230,7 @@ QColor Game::getMostColor(std::vector<Cell> &neighbours, int colorRule)
             else yellow += 0;
         }
         if(red > yellow) mostColor = Qt::red;
-        else mostColor = Qt::yellow;
+        else mostColor = Qt::blue;
     }
     break;
     case ColorRule::QuadLife:
@@ -310,4 +317,24 @@ bool Game::IsCellAlive(int x, int y)
 void Game::SetRule(std::string rule)
 {
     this->rule = rule;
+}
+
+void Game::SetCellColor(int x, int y, QColor color)
+{
+    this->board(x,y).SetColor(color);
+}
+
+QColor Game::GetCellColor(int x, int y)
+{
+    return this->board(x,y).GetColor();
+}
+
+void Game::SetColorRule(int colorRule)
+{
+    this->colorRule = colorRule;
+}
+
+int Game::GetColorRule()
+{
+    return this->colorRule;
 }
