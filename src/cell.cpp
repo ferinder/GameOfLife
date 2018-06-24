@@ -12,7 +12,13 @@ Cell::Cell(bool alive)
     this->color = Qt::black;
 }
 
-bool Cell::IsAlive()
+Cell::Cell(bool alive, QColor color)
+{
+    this->alive = alive;
+    this->color = color;
+}
+
+bool Cell::IsAlive() const
 {
     return alive;
 }
@@ -33,7 +39,7 @@ void Cell::SetColor(QColor color)
     this->color = color;
 }
 
-QColor Cell::GetColor()
+QColor Cell::GetColor() const
 {
     return this->color;
 }

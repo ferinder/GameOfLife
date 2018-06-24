@@ -28,7 +28,8 @@ Cell(bool alive);
  *
  * If cell is alive, method return true, otherwise returns false.
  */
-bool IsAlive();
+Cell(bool alive, QColor color);
+bool IsAlive() const;
 /*!
  * \brief Method sets cell state acording to parameter.
  * \param alive - new cell state.
@@ -40,7 +41,7 @@ void SetState(bool alive);
 void ToggleState();
 
 void SetColor(QColor color);
-QColor GetColor();
+QColor GetColor() const;
 
 private:
 bool alive; ///< Propertie holds cell state.
