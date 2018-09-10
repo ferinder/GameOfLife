@@ -22,13 +22,21 @@ Cell();
  * Constructs Cell an initialize its state with parameter alive.
  */
 Cell(bool alive);
+
+/*!
+ * \brief Cell constructor.
+ * \param alive - cell state for initialization,
+ * \param color - cell color for initializtion.
+ *
+ * Constructs cell initialized with cell state and color.
+ */
+Cell(bool alive, QColor color);
 /*!
  * \brief Method returns cell state.
  * \return cell state.
  *
  * If cell is alive, method return true, otherwise returns false.
  */
-Cell(bool alive, QColor color);
 bool IsAlive() const;
 /*!
  * \brief Method sets cell state acording to parameter.
@@ -40,7 +48,16 @@ void SetState(bool alive);
  */
 void ToggleState();
 
+/*!
+ * \brief Sets color of cell.
+ * \param color - new cell color.
+ */
 void SetColor(QColor color);
+
+/*!
+ * \brief Gets color of cell.
+ * \return cell color.
+ */
 QColor GetColor() const;
 
 private:

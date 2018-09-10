@@ -296,20 +296,6 @@ QColor Game::getMostColor(std::vector<Cell> &neighbours, int colorRule)
     return mostColor;
 }
 
-int Game::calculateNeighbours(int x, int y)
-{
-    int aliveNeighbours = 0;
-    for(int i = -1; i < 2; i++)
-    {
-        if((x+i) < 0 || (x+i) >= this->board.GetSizeX()) continue;
-        for (int j = -1; j < 2; j++)
-        {
-            if((y+j) < 0 || (y+j) >= this->board.GetSizeY() || (i == 0 && j == 0)) continue;
-            if(this->board(x+i, y+j).IsAlive()) aliveNeighbours += 1;
-        }
-    }
-    return aliveNeighbours;
-}
 
 std::vector<Cell> Game::getNeighbours(GameBoard& board, int x, int y)
 {

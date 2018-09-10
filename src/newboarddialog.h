@@ -32,6 +32,11 @@ int GetSizeX();
  * \return board size y from dialog.
  */
 int GetSizeY();
+
+/*!
+ * \brief Get choosen color rule from user input.
+ * \return game color rule from ColorRule enum.
+ */
 int GetColorRule();
 
 private:

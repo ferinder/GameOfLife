@@ -26,7 +26,7 @@ Cell::Cell(bool alive, QColor color)
 
 bool Cell::IsAlive() const
 {
-    return alive;
+    return this->alive;
 }
 
 void Cell::SetState(bool state)

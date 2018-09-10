@@ -9,13 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionSaveBoard->setDisabled(true);
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()), this, SLOT(runSimulation()));
-    timer->setInterval(500);
     settings->SetSimulationInterval(500);
-}
-
-int MainWindow::GetSimulationStepTime()
-{
-    return this->timer->interval();
+    timer->setInterval(settings->GetSimulationInterval());
 }
 
 

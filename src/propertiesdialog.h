@@ -28,6 +28,10 @@ explicit PropertiesDialog(QWidget *parent = 0);
  */
 int GetSimulationTime();
 
+/*!
+ * \brief Get board wrapping setting from user input.
+ * \return choosen setting.
+ */
 bool GetBoardWrapingSetting();
 
 private:

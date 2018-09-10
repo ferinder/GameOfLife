@@ -83,17 +83,33 @@ bool IsCellAlive(int x, int y);
  */
 void SetRule(std::string rule);
 
+/*!
+ * \brief Sets cell color.
+ * \param x - cell x position on board,
+ * \param y - cell y position on board,
+ * \param color - new cell color.
+ */
 void SetCellColor(int x, int y, QColor color);
 
+/*!
+ * \brief Gets cell color
+ * \param x - cell x position on board,
+ * \param y - cell y position on board,
+ * \return QColor of given cell.
+ */
 QColor GetCellColor(int x, int y);
 
+/*!
+ * \brief Method sets game color rule.
+ * \param Color rule from ColorRule enum.
+ */
 void SetColorRule(int colorRule);
 
+/*!
+ * \brief Get current color rule.
+ * \return Color rule from ColorRule enum.
+ */
 int GetColorRule();
-
-bool GetBoardWraping();
-
-void SetBoardWraping(bool wraping);
 
 private:
 GameBoard board;
@@ -103,7 +119,6 @@ int colorRule;
 
 GameSettings *settings = GameSettings::GetInstance();
 
-int calculateNeighbours(int x, int y);
 std::vector<Cell> getNeighbours(GameBoard &board, int x, int y);
 void calculateNewBoard(GameBoard& newBoard);
 void colorNewBoard(GameBoard& newBoard);

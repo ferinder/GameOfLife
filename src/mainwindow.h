@@ -29,8 +29,7 @@ public:
  * \param parent - pointer to parent object.
  */
 explicit MainWindow(QWidget *parent = 0);
-int GetSimulationStepTime();
-bool GetBoardWraping();
+
 ~MainWindow();
 
 private slots:
